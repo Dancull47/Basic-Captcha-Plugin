@@ -6,43 +6,36 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.permissions.PermissionAttachment;
-
 import java.util.HashMap;
 import java.util.Random;
 import java.util.UUID;
 
-public class PlayerJoinListener implements Listener {
+public class PlayerChat implements Listener {
     static TemplatePlugin plugin;
+    private static final String VERIFIED_PERMISSION = "VERIFIED";
+    private static final int CODE_LIMIT = 5;
     private HashMap<UUID, String> savedCode = new HashMap<>();
+    private Random random = new Random();
+    String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
 
-    @EventHandler
-    public void join(PlayerJoinEvent event){
-        Player player = event.getPlayer();
-        UUID uuid = player.getUniqueId();
-        if (player.hasPermission("VERIFIED")){
-            player.sendMessage("Hey, you're verified!");
-        }   else {
-            player.sendMessage("Hey, you're NOT verified!");
-            String code = rng(uuid);
-            player.sendMessage("Please type in the following code: " + code);
-        }
-    }
     @EventHandler
     public void chat(AsyncPlayerChatEvent event){
         Player player = event.getPlayer();
         UUID uuid = player.getUniqueId();
-        if (!player.hasPermission("VERIFIED")){
+        if (plugin.getPermissions().playerHas(player, "VERIFIED")){
             checker(uuid, player, event.getMessage());
             event.setCancelled(true);
         }
     }
 
     public String rng(UUID uuid){
-        Random random = new Random();
-        int limit = 9;
-        String code = random.nextInt(limit) +""+ random.nextInt(limit) +""+ random.nextInt(limit);
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0; i < CODE_LIMIT; i++) {
+            int index = random.nextInt(alphabet.length());
+            char randomChar = alphabet.charAt(index);
+            sb.append(randomChar);
+        }
+        String code = sb.toString().toLowerCase();
         savedCode.put(uuid, code);
         return code;
     }
@@ -62,6 +55,6 @@ public class PlayerJoinListener implements Listener {
         }   else{correct(uuid, player);}
     }
     public void permission(Player player){
-        plugin.getPermissions().playerAdd(player, "VERIFIED");
+        plugin.getPermissions().playerAdd(player, VERIFIED_PERMISSION);
     }
 }
