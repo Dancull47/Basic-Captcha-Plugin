@@ -4,6 +4,7 @@ import de.joeakeem.spigotmc.plugin.template.TemplatePlugin;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import java.util.HashMap;
@@ -18,11 +19,11 @@ public class PlayerChat implements Listener {
     private Random random = new Random();
     String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOW)
     public void chat(AsyncPlayerChatEvent event){
         Player player = event.getPlayer();
         UUID uuid = player.getUniqueId();
-        if (plugin.getPermissions().playerHas(player, "VERIFIED")){
+        if (!plugin.getPermissions().playerHas(player, VERIFIED_PERMISSION)){
             checker(uuid, player, event.getMessage());
             event.setCancelled(true);
         }
