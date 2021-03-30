@@ -1,6 +1,7 @@
 package de.joeakeem.spigotmc.plugin.template.event;
 
 import de.joeakeem.spigotmc.plugin.template.TemplatePlugin;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -20,11 +21,13 @@ public class PlayerChat implements Listener {
     String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
     public TemplatePlugin plugin;
     public PlayerChat(TemplatePlugin plugin) {
+        Bukkit.getPluginManager().registerEvents(this, plugin);
         this.plugin = plugin;
     }
+    public String configMethod = plugin.getConfig().getString("Captcha-Type");
 
     @EventHandler(priority = EventPriority.LOW)
-    public void chat(AsyncPlayerChatEvent event){
+    public void chat(org.bukkit.event.player.AsyncPlayerChatEvent event){
         Player player = event.getPlayer();
         UUID uuid = player.getUniqueId();
         if (!plugin.getPermissions().playerHas(player, VERIFIED_PERMISSION)){
