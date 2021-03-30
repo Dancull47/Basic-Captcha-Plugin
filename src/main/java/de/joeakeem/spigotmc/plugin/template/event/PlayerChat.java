@@ -10,14 +10,18 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.UUID;
+import java.util.logging.Logger;
 
 public class PlayerChat implements Listener {
-    static TemplatePlugin plugin;
     private static final String VERIFIED_PERMISSION = "VERIFIED";
     private static final int CODE_LIMIT = 5;
     private HashMap<UUID, String> savedCode = new HashMap<>();
     private Random random = new Random();
     String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+    public TemplatePlugin plugin;
+    public PlayerChat(TemplatePlugin plugin) {
+        this.plugin = plugin;
+    }
 
     @EventHandler(priority = EventPriority.LOW)
     public void chat(AsyncPlayerChatEvent event){
