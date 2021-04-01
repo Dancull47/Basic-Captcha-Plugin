@@ -1,6 +1,6 @@
-package de.joeakeem.spigotmc.plugin.template.event;
+package monzter.captcha.plugin.event;
 
-import de.joeakeem.spigotmc.plugin.template.TemplatePlugin;
+import monzter.captcha.plugin.Captcha;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -14,7 +14,7 @@ public class MovementListener implements Listener {
 
     private final Logger logger;
 
-    public MovementListener(TemplatePlugin plugin) {
+    public MovementListener(Captcha plugin) {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
         this.logger = plugin.getLogger();
     }

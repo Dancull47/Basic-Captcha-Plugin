@@ -1,2 +1,15 @@
-reload-message: "Plugin reloaded!"
+# There are 3 types of Captchas which can be used
+# STRING type will make a Captcha from this list "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
+# CHARS type will make a Captcha from this list "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+# INTS type will make a Captcha from this list "1234567890"
 Captcha-Type: STRING
+
+# How long the Captcha will be
+Captcha-Length: 5
+
+# This is the permission which is required to use most Commands
+Admin-Permission: "CAPTCHA.ADMIN"
+
+# Permission given to Player once they enter a Valid captcha.
+# This permission prevents user from being required to enter another captcha.
+Given-Permission: "CAPTCHA.VERIFIED"
