@@ -3,7 +3,7 @@
 This plugin is used to prevent new players from talking in Chat until they enter in the Captcha.  
 You can customize the: Length of Captcha, Permission to bypass Captcha, Captcha Method, and much more.  
 This is my first Minecraft Plugin I've made while learning Java and how to create a Plugin. It's simple, but I don't think it's poorly coded.  
-I also had help from [Seyfahni](https://github.com/seyfahni) who gave me suggestions and helped me improve the plugin!  
+I also had help from [seyfahni](https://github.com/seyfahni) who gave me suggestions and helped me improve the plugin!  
 
 ## Prerequisites
 
