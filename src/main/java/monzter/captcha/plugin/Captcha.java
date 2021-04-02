@@ -7,7 +7,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.Listener;
-import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -16,21 +15,17 @@ import java.io.InputStream;
 import java.util.logging.Level;
 
 public class Captcha extends JavaPlugin implements Listener {
-    public static Captcha plugin;
     private static Permission perms = null;
     public static YamlConfiguration LANGUAGE;
     public static File LANGUAGE_FILE;
 
-    public void onLoad(){
-        plugin = this;
-    }
     @Override
     public void onEnable() {
         loadLang();
         setupPermissions();
         Bukkit.getServer().getPluginManager().registerEvents(this, this);
-        Bukkit.getServer().getPluginManager().registerEvents(new PlayerChat(), this);
-        getCommand("Captcha").setExecutor(new Commands());
+        Bukkit.getServer().getPluginManager().registerEvents(new PlayerChat(this), this);
+        getCommand("Captcha").setExecutor(new Commands(this));
         saveDefaultConfig();
         getLogger().info(Language.TITLE.toString() + ChatColor.GREEN + "has started!");
     }
@@ -41,13 +36,11 @@ public class Captcha extends JavaPlugin implements Listener {
     }
 
 
-    private boolean setupPermissions(){
-        RegisteredServiceProvider<Permission> rsp = getServer().getServicesManager().getRegistration(Permission.class);
-        perms = rsp.getProvider();
-        return perms != null;
+    private void setupPermissions(){
+        perms = getServer().getServicesManager().getRegistration(Permission.class).getProvider();
     }
 
-    public static Permission getPermissions() {
+    public Permission getPermissions() {
         return perms;
     }
 
@@ -65,9 +58,8 @@ public class Captcha extends JavaPlugin implements Listener {
                     Language.setFile(defConfig);
                 }
             } catch(IOException e) {
-                e.printStackTrace();
-                getLogger().severe(Language.TITLE.toString() + ChatColor.RED + "Couldn't create language file." + "\n"
-                        + Language.TITLE + ChatColor.RED + "This is a fatal error. Now disabling");
+                getLogger().log(Level.SEVERE, Language.TITLE.toString() + ChatColor.RED + "Couldn't create language file." + "\n"
+                        + Language.TITLE + ChatColor.RED + "This is a fatal error. Now disabling", e);
                 this.setEnabled(false);
             }
         }
@@ -84,8 +76,7 @@ public class Captcha extends JavaPlugin implements Listener {
             conf.save(getLangFile());
         } catch(IOException e) {
             getLogger().log(Level.WARNING, Language.TITLE.toString() + ChatColor.RED + "Failed to save lang.yml." + "\n"
-                    + Language.TITLE + ChatColor.RED + "Report this stack trace to Monzter#4951 on Discord!");
-            e.printStackTrace();
+                    + Language.TITLE + ChatColor.RED + "Report this stack trace to Monzter#4951 on Discord!", e);
         }
     }
 
