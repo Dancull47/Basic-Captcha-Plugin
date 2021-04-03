@@ -1,0 +1,7 @@
+title-name: "&c[&6Captcha&c] "
+invalid-player: "&cYou must specify a valid Player!"
+reset: "&e%player% &ahas been reset, and will now require a captcha the next time they try to talk!"
+correct: "&aThe code you entered was correct and you may now chat!"
+incorrect: "&cThe code you entered %code% was incorrect!"
+incorrect-retry: "&ePlease type the following code: %code%"
+no-permissions: "&cYou don''t have permission for that!"

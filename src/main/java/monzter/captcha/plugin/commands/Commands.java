@@ -27,7 +27,7 @@ public class Commands implements CommandExecutor {
             if (sender.isOp() || sender.hasPermission(plugin.getConfig().getString("Admin-Permission", "CAPTCHA.ADMIN"))){
                 sender.sendMessage(Language.TITLE.toString() + ChatColor.GREEN + "The plugin has been reloaded!");
                 plugin.reloadConfig();
-                plugin.loadLang();
+                plugin.createFile();
                 return true;
             }
         }
